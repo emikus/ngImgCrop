@@ -2,10 +2,10 @@
  * ngImgCrop v0.3.2
  * https://github.com/alexk111/ngImgCrop
  *
- * Copyright (c) 2014 Alex Kaul
+ * Copyright (c) 2015 Alex Kaul
  * License: MIT
  *
- * Generated at Wednesday, December 3rd, 2014, 3:54:12 PM
+ * Generated at Thursday, January 15th, 2015, 10:12:50 PM
  */
 (function() {
 'use strict';
@@ -1770,13 +1770,14 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
       resultImageSize: '=',
       resultImageFormat: '@',
       resultImageQuality: '=',
+      invalidFileMsg: '=',
 
       onChange: '&',
       onLoadBegin: '&',
       onLoadDone: '&',
       onLoadError: '&'
     },
-    template: '<canvas></canvas>',
+    template: '<input type="file" id="fileInput" /><canvas></canvas>',
     controller: ['$scope', function($scope) {
       $scope.events = new CropPubSub();
     }],
@@ -1873,7 +1874,32 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
       scope.$on('$destroy', function(){
           cropHost.destroy();
       });
+
+      var fileInput = element.find('input'),
+
+        handleFileSelect=function(evt) {
+
+          var file=evt.currentTarget.files[0];
+          var reader = new FileReader();
+          reader.onload = function (evt) {
+
+            if (validateFileType(this.result) === true) {
+              scope.invalidFileMsg = null;
+              scope.image=evt.target.result;
+              scope.$apply();
+            } else {
+              scope.invalidFileMsg = "You should use only image files in jpg, png or gif format, feel free to try again.";
+              scope.image = null;
+              scope.imageCropResult = null;
+              scope.$apply();
+            }
+          };
+          reader.readAsDataURL(file);
+        };
+
+      fileInput.on('change',handleFileSelect);
     }
   };
 }]);
+
 }());
