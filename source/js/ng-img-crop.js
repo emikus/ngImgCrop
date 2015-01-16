@@ -117,8 +117,14 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
       scope.$on('$destroy', function(){
           cropHost.destroy();
       });
-
-      var fileInput = element.find('input'),
+      
+      var validateFileType = function (croppedImgBase64) {
+        return croppedImgBase64.indexOf('image/png') > -1 ||
+          croppedImgBase64.indexOf('image/jpg') > -1 ||
+          croppedImgBase64.indexOf('image/jpeg') > -1 ||
+          croppedImgBase64.indexOf('image/gif') > -1;
+      },
+        fileInput = element.find('input'),
 
         handleFileSelect=function(evt) {
 
