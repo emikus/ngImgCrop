@@ -5,7 +5,7 @@
  * Copyright (c) 2015 Alex Kaul
  * License: MIT
  *
- * Generated at Friday, January 16th, 2015, 12:41:22 PM
+ * Generated at Monday, January 19th, 2015, 10:22:26 PM
  */
 (function() {
 'use strict';
@@ -1771,6 +1771,7 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
       resultImageFormat: '@',
       resultImageQuality: '=',
       invalidFileMsg: '=',
+      cancelImgChange: '=',
 
       onChange: '&',
       onLoadBegin: '&',
@@ -1902,6 +1903,13 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
           };
           reader.readAsDataURL(file);
         };
+      scope.cancelImgChange = function () {
+        scope.image='';
+        scope.resultImage='';
+        fileInput.replaceWith('<input type="file" id="fileInput" />');
+        fileInput = element.find('input');
+        fileInput.on('change',handleFileSelect);
+      };
 
       fileInput.on('change',handleFileSelect);
     }

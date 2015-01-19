@@ -14,6 +14,7 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
       resultImageFormat: '@',
       resultImageQuality: '=',
       invalidFileMsg: '=',
+      cancelImgChange: '=',
 
       onChange: '&',
       onLoadBegin: '&',
@@ -145,6 +146,13 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
           };
           reader.readAsDataURL(file);
         };
+      scope.cancelImgChange = function () {
+        scope.image='';
+        scope.resultImage='';
+        fileInput.replaceWith('<input type="file" id="fileInput" />');
+        fileInput = element.find('input');
+        fileInput.on('change',handleFileSelect);
+      };
 
       fileInput.on('change',handleFileSelect);
     }
