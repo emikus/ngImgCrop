@@ -1,11 +1,11 @@
 /*!
- * ngImgCrop v0.3.2
+ * ngImgCrop v0.3.3
  * https://github.com/alexk111/ngImgCrop
  *
  * Copyright (c) 2015 Alex Kaul
  * License: MIT
  *
- * Generated at Monday, January 19th, 2015, 10:22:26 PM
+ * Generated at Thursday, January 22nd, 2015, 2:48:40 PM
  */
 (function() {
 'use strict';
